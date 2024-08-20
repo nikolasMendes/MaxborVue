@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-full overflow-hidden flex justify-center">
     <!-- <div
         v-for="(item, index) in images"
         :key="item"
@@ -17,24 +17,30 @@
           </button>
         </div>
       </div> -->
+
     <Carousel
-      :value="images"
-      :numVisible="1"
-      :numScroll="1"
-      :responsiveOptions="responsiveOptions"
-      circular
-      :autoplayInterval="3000"
+      :itemsToShow="1.95"
+      :autoplay="2000"
+      :wrapAround="true"
+      :transition="500"
+      ref="feedCarrousel"
+      :breakpoints="this.breakpoints"
     >
-      <template #item="item">
-        <div>
-          <img :src="item.data.url" />
+      <slide v-for="item in images" :key="item">
+        <div class="carousel__item mx-2 flex justify-center">
+          <img :src="item.url" />
         </div>
+      </slide>
+      <template #addons>
+        <!-- <navigation /> -->
+        <pagination />
       </template>
     </Carousel>
   </div>
 </template>
 <script>
-import Carousel from "primevue/carousel";
+import "vue3-carousel/dist/carousel.css";
+import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 
 export default {
   name: "Slider",
@@ -68,28 +74,26 @@ export default {
           link: "",
         },
       ],
-      responsiveOptions: [
-        {
-          breakpoint: "1400px",
-          numVisible: 1,
-          numScroll: 1,
+      breakpoints: {
+        1300: {
+          itemsToShow: 1,
+          snapAlign: "start",
         },
-        {
-          breakpoint: "1199px",
-          numVisible: 1,
-          numScroll: 1,
+        1560: {
+          itemsToShow: 1,
+          snapAlign: "start",
         },
-        {
-          breakpoint: "767px",
-          numVisible: 1,
-          numScroll: 1,
+
+        1920: {
+          itemsToShow: 1,
+          snapAlign: "start",
         },
-        {
-          breakpoint: "575px",
-          numVisible: 1,
-          numScroll: 1,
+
+        2260: {
+          itemsToShow: 1,
+          snapAlign: "start",
         },
-      ],
+      },
 
       timer: null,
       currentIndex: 0,
@@ -97,6 +101,9 @@ export default {
   },
   components: {
     Carousel,
+    Slide,
+    Pagination,
+    Navigation,
   },
   computed: {
     currentImg() {
@@ -111,6 +118,12 @@ export default {
     this.startSlide();
   },
   methods: {
+    nextStorie() {
+      this.$refs["feedCarrousel"].next();
+    },
+    backStorie() {
+      this.$refs["feedCarrousel"].prev();
+    },
     startSlide() {
       this.timer = setInterval(this.next(), 4000);
     },
@@ -126,21 +139,44 @@ export default {
   },
 };
 </script>
-<style>
-/* .fade-enter-active,
-.fade-leave-active {
-  transition: all 0.9s ease;
-  overflow: hidden;
-  visibility: visible;
-  position: absolute;
-  width: 100%;
-  opacity: 1;
+<style scoped>
+.carousel__slide {
+  padding: 5px;
 }
 
-.fade-enter,
-.fade-leave-to {
-  visibility: hidden;
-  width: 100%;
-  opacity: 0;
-} */
+.carousel__viewport {
+  perspective: 2000px;
+}
+
+.carousel__track {
+  transform-style: preserve-3d;
+}
+
+.carousel__slide--sliding {
+  transition: 0.5s;
+}
+
+.carousel__slide {
+  opacity: 0.9;
+  transform: rotateY(-20deg) scale(0.9);
+}
+
+.carousel__slide--active ~ .carousel__slide {
+  transform: rotateY(20deg) scale(0.9);
+}
+
+.carousel__slide--prev {
+  opacity: 1;
+  transform: rotateY(-10deg) scale(0.95);
+}
+
+.carousel__slide--next {
+  opacity: 1;
+  transform: rotateY(10deg) scale(0.95);
+}
+
+.carousel__slide--active {
+  opacity: 1;
+  transform: rotateY(0) scale(1.1);
+}
 </style>
