@@ -1,16 +1,24 @@
 <template>
   <div class="w-full overflow-hidden flex justify-center">
     <Carousel
-      :itemsToShow="1.95"
-      :autoplay="2000"
+      :itemsToShow="3.2"
+      :autoplay="3000"
       :wrapAround="true"
       :transition="500"
       ref="feedCarrousel"
       :breakpoints="this.breakpoints"
     >
-      <slide v-for="item in images" :key="item">
-        <div class="carousel__item mx-2 flex justify-center">
-          <img :src="item.url" />
+      <slide class="rounded-2xl" v-for="item in images" :key="item">
+        <div
+          class="rounded-2xl shadow-xl active:shadow-2xl relative mx-2 flex justify-center"
+        >
+          <img class="rounded-2xl" :src="item.url" />
+          <div class="absolute flex flex-col justify-start gap-2 top-11 left-8">
+            <p class="font-extrabold font-sans text-3xl">{{ item.title }}</p>
+            <button class="p-2 bg-red-600 rounded-lg w-min">
+              <p class="text-white w-max text-lg">Saiba mais</p>
+            </button>
+          </div>
         </div>
       </slide>
       <template #addons>
@@ -28,31 +36,31 @@ export default {
   name: "Slider",
   data() {
     return {
-      img: "../../static/isolantesEletricos.png",
       images: [
         {
-          title: "Espuma Adesiva",
-          url: "../../static/espumasAdesivas.png",
-          link: "",
-        },
-        {
-          title: "Isolante Elétrico",
-          url: "../../static/isolantesEletricos.png",
-          link: "",
-        },
-        {
-          title: "Lençol de Borracha",
-          url: "../../static/lencolBorracha.png",
-          link: "",
-        },
-        {
           title: "Piso de Borracha",
-          url: "../../static/pisosBorracha.png",
+          url: "../../static/1.png",
+          link: "",
+        },
+
+        {
+          title: "Espuma Adesiva",
+          url: "../../static/2.png",
           link: "",
         },
         {
           title: "Peça Técnica",
-          url: "../../static/pecasTecnicas.png",
+          url: "../../static/3.png",
+          link: "",
+        },
+        {
+          title: "Peça Técnica",
+          url: "../../static/4.png",
+          link: "",
+        },
+        {
+          title: "Lençol de borracha",
+          url: "../../static/5.png",
           link: "",
         },
       ],
@@ -123,7 +131,8 @@ export default {
 </script>
 <style scoped>
 .carousel__slide {
-  padding: 5px;
+  min-height: 450px;
+  align-items: end;
 }
 
 .carousel__viewport {
@@ -148,17 +157,17 @@ export default {
 }
 
 .carousel__slide--prev {
-  opacity: 1;
-  transform: rotateY(-10deg) scale(0.95);
+  opacity: 10;
+  filter: blur(3px);
 }
 
 .carousel__slide--next {
-  opacity: 1;
-  transform: rotateY(10deg) scale(0.95);
+  opacity: 10;
+  filter: blur(3px);
 }
 
 .carousel__slide--active {
-  opacity: 1;
-  transform: rotateY(0) scale(1.1);
+  position: relative;
+  transform: translateY(-40px);
 }
 </style>
