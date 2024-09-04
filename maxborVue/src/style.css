@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "LeagueSpartan";
+    src: url("assets\fonts\static\LeagueSpartan-ExtraBold.ttf")
+      format("truetype");
+    font-weight: 400;
+    font-style: normal;
+  }
+}

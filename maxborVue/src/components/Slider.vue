@@ -1,12 +1,13 @@
 <template>
   <div class="w-full overflow-hidden flex justify-center">
     <Carousel
-      :itemsToShow="3.2"
+      :itemsToShow="3"
       :autoplay="3000"
       :wrapAround="true"
       :transition="500"
       ref="feedCarrousel"
       :breakpoints="this.breakpoints"
+      class="w-full"
     >
       <slide class="rounded-2xl" v-for="item in images" :key="item">
         <div
@@ -14,7 +15,15 @@
         >
           <img class="rounded-2xl" :src="item.url" />
           <div class="absolute flex flex-col justify-start gap-2 top-11 left-8">
-            <p class="font-extrabold font-sans text-3xl">{{ item.title }}</p>
+            <div class="flex flex-col items-start justify-start">
+              <p class="w-max font-extrabold font-sans text-2xl">
+                {{ item.title }}
+              </p>
+              <p v-if="item.subtitle" class="font-sans text-xl font-extrabold">
+                {{ item.subtitle }}
+              </p>
+            </div>
+
             <button class="p-2 bg-red-600 rounded-lg w-min">
               <p class="text-white w-max text-lg">Saiba mais</p>
             </button>
@@ -50,6 +59,7 @@ export default {
         },
         {
           title: "Peça Técnica",
+          subtitle: "de lençol e piso de borracha",
           url: "../../static/3.png",
           link: "",
         },
@@ -66,21 +76,21 @@ export default {
       ],
       breakpoints: {
         1300: {
-          itemsToShow: 1,
-          snapAlign: "start",
+          itemsToShow: 3.2,
+          snapAlign: "center",
         },
         1560: {
-          itemsToShow: 1,
+          itemsToShow: 2,
           snapAlign: "start",
         },
 
         1920: {
-          itemsToShow: 1,
+          itemsToShow: 2,
           snapAlign: "start",
         },
 
         2260: {
-          itemsToShow: 1,
+          itemsToShow: 2,
           snapAlign: "start",
         },
       },
@@ -131,8 +141,7 @@ export default {
 </script>
 <style scoped>
 .carousel__slide {
-  min-height: 450px;
-  align-items: end;
+  min-height: 460px;
 }
 
 .carousel__viewport {
@@ -167,7 +176,6 @@ export default {
 }
 
 .carousel__slide--active {
-  position: relative;
-  transform: translateY(-40px);
+  transform: translateY(-30px);
 }
 </style>
